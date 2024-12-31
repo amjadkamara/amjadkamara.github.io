@@ -4,43 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amjad Kamara | Portfolio</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Amjad Kamara</h1>
-        <p>Creative Solutions for Web Development</p>
-    </header>
-    <main>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <h1>Amjad Kamara</h1>
+            <p>Creative Web Developer | Crafting Unique Digital Experiences</p>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- About Section -->
         <section id="about">
             <h2>About Me</h2>
-            <p>I specialize in creating dynamic, responsive web experiences.</p>
+            <p>I’m a developer passionate about creating visually stunning and functional websites. With experience in Python, JavaScript, and CMS development, I bring ideas to life through clean and efficient code.</p>
         </section>
+
+        <!-- Projects Section -->
         <section id="projects">
-            <h2>My Projects</h2>
-            <p>Check out some of my unique work below!</p>
+            <h2>Projects</h2>
+            <div class="project">
+                <h3>Project 1: Health Education Library</h3>
+                <p>A CMS-based document library for Sierra Leone’s Directorate of Health Security and Emergencies.</p>
+            </div>
+            <div class="project">
+                <h3>Project 2: Personal Portfolio</h3>
+                <p>A modern and responsive portfolio website built with a custom tech stack.</p>
+            </div>
         </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 Amjad Kamara. All rights reserved.</p>
-    </footer>
-    <script>
-        function setup() {
-            createCanvas(windowWidth, windowHeight);
-            background(0);
-        }
 
-        function draw() {
-            noStroke();
-            fill(random(255), random(255), random(255), 100);
-            ellipse(mouseX, mouseY, random(20, 50));
-        }
+        <!-- Services Section -->
+        <section id="services">
+            <h2>Services</h2>
+            <ul>
+                <li>Web Development</li>
+                <li>Database Management</li>
+                <li>Technical Support & Consultancy</li>
+            </ul>
+        </section>
 
-        function windowResized() {
-            resizeCanvas(windowWidth, windowHeight);
-        }
-    </script>
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2>Contact</h2>
+            <p>Email: <a href="mailto:amjadkamara@aol.co.uk">amjadkamara@aol.co.uk</a></p>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 Amjad Kamara. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 </html>
+
 
