@@ -1,27 +1,45 @@
-/* Base styles for mobile */
+/* Base Styles */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
     background-color: #121212;
-    color: #f5f5f5;
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
 header {
     text-align: center;
-    padding: 20px;
-    background-color: #1a1a1a;
+    padding: 40px 20px;
+    border-bottom: 1px solid #333;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #fff;
+}
+
+header p {
+    font-size: 1.2rem;
+    color: #bbb;
 }
 
 nav ul {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     list-style: none;
     padding: 0;
+    margin: 20px 0 0;
 }
 
 nav ul li {
-    margin: 10px 0;
+    margin: 0 15px;
 }
 
 nav ul li a {
@@ -30,10 +48,50 @@ nav ul li a {
     font-weight: bold;
 }
 
-/* Tablet and Desktop styles */
-@media (min-width: 768px) {
-    nav ul {
-        flex-direction: row;
-        justify-content: center;
-    }
+/* Sections */
+section {
+    margin: 40px 0;
+    padding: 20px;
+    border-radius: 8px;
+    background: #1e1e1e;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.project {
+    margin-bottom: 20px;
+}
+
+.project h3 {
+    color: #0078d4;
+    margin-bottom: 10px;
+}
+
+.project p {
+    color: #bbb;
+}
+
+/* Services List */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 10px 0;
+    color: #bbb;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid #333;
+    margin-top: 40px;
+    color: #777;
 }
