@@ -3,36 +3,858 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amjad Kamara | Home</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Amjad Mohamed Kamara - IT Specialist & Full-Stack Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #0d1117;
+            --secondary-color: #161b22;
+            --accent-color: #58a6ff;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --border-color: #30363d;
+            --success-color: #238636;
+            --gradient-start: #0d1117;
+            --gradient-end: #1a1f26;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%23ffffff02" points="0,0 1000,300 1000,1000 0,700"/></svg>');
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--text-primary), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .hero .description {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #4493e0;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--secondary-color);
+            border-color: var(--accent-color);
+        }
+        
+        .section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-card {
+            background: var(--secondary-color);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            display: block;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .skill-category {
+            background: var(--secondary-color);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .skill-category h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .skill-tag {
+            background: var(--primary-color);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .experience-timeline {
+            position: relative;
+            margin-top: 3rem;
+        }
+        
+        .timeline-item {
+            background: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .timeline-date {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .timeline-company {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .timeline-achievements {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        
+        .timeline-achievements li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        
+        .timeline-achievements li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .project-card {
+            background: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+        
+        .project-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .project-title {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .project-type {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+        }
+        
+        .project-body {
+            padding: 1.5rem;
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .project-tag {
+            background: var(--primary-color);
+            color: var(--text-secondary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .contact-section {
+            background: var(--secondary-color);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .contact-item a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        footer {
+            background: var(--primary-color);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .mobile-menu {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+                background: none;
+                border: none;
+                color: var(--text-primary);
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        .badge-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            background: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .badge:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-color);
+        }
+        
+        .badge-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="photo-card">
-                <img src="your-photo.jpg" alt="Amjad Kamara">
-                <h2>Amjad Kamara</h2>
-                <p>Enterprise Systems Developer</p>
+    <header>
+        <nav>
+            <a href="#" class="logo">Amjad Kamara</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu">☰</button>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>IT Specialist & Full-Stack Developer</h1>
+                <p class="subtitle">15+ Years of Enterprise Solutions & Innovation</p>
+                <p class="description">
+                    Delivering secure, scalable applications for UN agencies, government ministries, 
+                    and multinational corporations. Trained at international headquarters including 
+                    Ericsson Bahrain, with proven expertise spanning telecoms, healthcare, and DeFi solutions.
+                </p>
+                
+                <div class="badge-section">
+                    <div class="badge">
+                        <div class="badge-icon"></div>
+                        <span>AI/ML Expert</span>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon"></div>
+                        <span>Llama-3-8B-Instruct Q4</span>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon"></div>
+                        <span>Blockchain Developer</span>
+                    </div>
+                </div>
+                
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li><a href="experience.html">Experience</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
-        </aside>
+        </div>
+    </section>
 
-        <!-- Main Content -->
-        <main class="content">
-            <h1>Welcome to My Portfolio</h1>
-            <p>I specialize in building enterprise systems that solve complex problems and streamline business processes. Explore my projects, experience, and services to see how I can help your organization thrive in the digital age.</p>
-        </main>
-    </div>
-</body>
-</html>
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">Professional Impact</h2>
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="stat-number">16+</span>
+                    <p class="stat-label">Years Experience</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">$76K+</span>
+                    <p class="stat-label">Contract Value Secured</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">99%</span>
+                    <p class="stat-label">System Uptime Achieved</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">2014</span>
+                    <p class="stat-label">Civic Codeathon Winner</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section id="experience" class="section">
+        <div class="container">
+            <h2 class="section-title">Professional Experience</h2>
+            <div class="experience-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2019 – Present</div>
+                    <h3 class="timeline-title">Freelance IT Consultant</h3>
+                    <p class="timeline-company">International Projects | Government & Healthcare Sectors</p>
+                    <ul class="timeline-achievements">
+                        <li>Won competitive international bidding for Johns Hopkins University Breakthrough ACTION contract ($7,429)</li>
+                        <li>Developed Health Education Library database system for Sierra Leone's Directorate of Health Security and Emergencies</li>
+                        <li>Conducted training sessions for 20+ focal persons on website content management and administration</li>
+                        <li>Built sophisticated Python arbitrage bot with Web3 wallet integration for DeFi trading</li>
+                        <li>Implementing real-time cryptocurrency trading across decentralized exchanges with dynamic algorithms</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Oct 2016 – Dec 2018</div>
+                    <h3 class="timeline-title">Systems Database Technician</h3>
+                    <p class="timeline-company">Office of the Chief of Staff, State House | Government of Sierra Leone</p>
+                    <ul class="timeline-achievements">
+                        <li>Provided technical support to 13 government units, maintaining 99% system uptime</li>
+                        <li>Assessed existing information systems and identified performance bottlenecks</li>
+                        <li>Implemented cost-effective solutions reducing IT expenses by 30%</li>
+                        <li>Designed responsive website for Sierra Leone Extractive Industries Transparency Initiative</li>
+                        <li>Provided hands-on data center support and server management expertise</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2011 – 2016</div>
+                    <h3 class="timeline-title">Head of IT & Founder</h3>
+                    <p class="timeline-company">Aadios Systems (SL) Ltd. | Managed Services Provider</p>
+                    <ul class="timeline-achievements">
+                        <li>Established successful MSP securing 8+ government contracts totaling $69,500+</li>
+                        <li>Major projects: National Public Procurement Authority ($19,500), Non-State Actors Secretariat ($22,000)</li>
+                        <li>Electricity Distribution Authority ($17,500), Ministry of Finance ($10,500)</li>
+                        <li>Provided managed IT services for National Authorizing Office (NAO)</li>
+                        <li>Completed full network installation at Makeni Shopping Plaza with community WiFi</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Jul 2008 – Jan 2011</div>
+                    <h3 class="timeline-title">Systems Developer</h3>
+                    <p class="timeline-company">Bharti Airtel Limited | International Telecommunications (Formerly Celtel → Zain → Airtel)</p>
+                    <ul class="timeline-achievements">
+                        <li>Navigated three major corporate acquisitions while maintaining system continuity</li>
+                        <li>Trained at Ericsson headquarters in Bahrain for charging systems and multimedia activation</li>
+                        <li>Developed online Work Planner for HR Department implementing SMART Goals framework</li>
+                        <li>Reduced manual processing errors by 99% through automated system implementations</li>
+                        <li>Served as backup to Enterprise Application Systems Manager across 20-country operation</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Mar 2008 – Jul 2008</div>
+                    <h3 class="timeline-title">Web Database Consultant</h3>
+                    <p class="timeline-company">United Nations Integrated Peace-building Office (UNIPSIL)</p>
+                    <ul class="timeline-achievements">
+                        <li>Developed comprehensive employee database system for all UN agencies in Sierra Leone</li>
+                        <li>Contract awarded after successful presentation of Central Prison database system</li>
+                        <li>Worked directly with UN Ambassador and Deputy Security Advisor</li>
+                        <li>Provided staff training for data entry and system administration</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Jan 2008 – Mar 2008</div>
+                    <h3 class="timeline-title">Database Consultant</h3>
+                    <p class="timeline-company">United Nations Integrated Peace-building Office (UNIPSIL)</p>
+                    <ul class="timeline-achievements">
+                        <li>Designed Prison Management System for Freetown Central Prison</li>
+                        <li>Created new prisoner registration system based on custom database architecture</li>
+                        <li>Received UN Ambassador recognition for exemplary database management skills</li>
+                        <li>Collaborated with UN Department of Safety and Security leadership</li>
+                        <li>Implemented web-based solution streamlining prison data handling processes</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Jan 2007 – Nov 2007</div>
+                    <h3 class="timeline-title">Web Designer/Programmer</h3>
+                    <p class="timeline-company">SBTS Group | IT Consultancy</p>
+                    <ul class="timeline-achievements">
+                        <li>Led all web development projects for comprehensive IT consultancy firm</li>
+                        <li>Developed HTML and PHP code for dynamic client websites</li>
+                        <li>Designed database structures for complex web applications</li>
+                        <li>Collaborated with graphic design teams ensuring specification compliance</li>
+                        <li>Determined site navigation, flow, and functionality with business stakeholders</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Advanced Trading Bot</h3>
+                        <p class="project-type">DeFi • Blockchain Integration</p>
+                    </div>
+                    <div class="project-body">
+                        <p>Sophisticated Python arbitrage bot with Web3 wallet integration, real-time cryptocurrency trading across decentralized exchanges, dynamic slippage algorithms, and multi-hop arbitrage strategies.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Web3</span>
+                            <span class="project-tag">MetaMask</span>
+                            <span class="project-tag">1inch API</span>
+                            <span class="project-tag">DeFi</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Health Education Library System</h3>
+                        <p class="project-type">Johns Hopkins • International Contract</p>
+                    </div>
+                    <div class="project-body">
+                        <p>Won competitive international bidding for $7,429 Breakthrough ACTION contract. Developed comprehensive database system for Sierra Leone's Directorate of Health Security and Emergencies, including training for 20+ administrators.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Database Design</span>
+                            <span class="project-tag">Healthcare</span>
+                            <span class="project-tag">International Bidding</span>
+                            <span class="project-tag">Training</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Government Web Portal Suite</h3>
+                        <p class="project-type">Multi-Ministry • $69.5K Total Value</p>
+                    </div>
+                    <div class="project-body">
+                        <p>Comprehensive web development projects including National Public Procurement Authority, Non-State Actors Secretariat, Electricity Distribution Authority, and Ministry of Finance portals with full hosting and training.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Government</span>
+                            <span class="project-tag">Multi-Ministry</span>
+                            <span class="project-tag">Web Portals</span>
+                            <span class="project-tag">Training</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Makeni Shopping Plaza Network</h3>
+                        <p class="project-type">Commercial Infrastructure • Community WiFi</p>
+                    </div>
+                    <div class="project-body">
+                        <p>Complete network installation including internet connectivity for mall shops and comprehensive WiFi infrastructure for community consumption, demonstrating large-scale network deployment expertise.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Network Infrastructure</span>
+                            <span class="project-tag">Commercial</span>
+                            <span class="project-tag">Community WiFi</span>
+                            <span class="project-tag">Internet Connectivity</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">UN Prison Management System</h3>
+                        <p class="project-type">United Nations • Security Infrastructure</p>
+                    </div>
+                    <div class="project-body">
+                        <p>Comprehensive prison management system for Freetown Central Prison, including custom prisoner registration system. Worked directly with UN Ambassador and Department of Safety and Security, receiving recognition for excellence.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">UN Standards</span>
+                            <span class="project-tag">Security Systems</span>
+                            <span class="project-tag">Prison Management</span>
+                            <span class="project-tag">Registration System</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Airtel HR Work Planner</h3>
+                        <p class="project-type">Enterprise • International Telecom</p>
+                    </div>
+                    <div class="project-body">
+                        <p>Online Work Planner for Human Resource Department implementing SMART Goals framework to improve company performance across Bharti Airtel's 20-country operation, developed after Ericsson training in Bahrain.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">HR Systems</span>
+                            <span class="project-tag">International Enterprise</span>
+                            <span class="project-tag">SMART Goals</span>
+                            <span class="project-tag">Performance Management</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Sierra Leone Extractive Industries Portal</h3>
+                        <p class="project-type">Government • Transparency Initiative</p>
+                    </div>
+                    <div class="project-body">
+                        <p>Responsive website design for Sierra Leone Extractive Industries Transparency Initiative (www.sleiti.gov.sl), supporting government transparency and public information access initiatives.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Responsive Design</span>
+                            <span class="project-tag">Government Portal</span>
+                            <span class="project-tag">Transparency</span>
+                            <span class="project-tag">Public Access</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title">Technical Expertise</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Full-Stack Development</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">Tailwind CSS</span>
+                        <span class="skill-tag">Vite</span>
+                        <span class="skill-tag">Spring Boot</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Database & Backend</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">MariaDB</span>
+                        <span class="skill-tag">Database Design</span>
+                        <span class="skill-tag">Server Administration</span>
+                        <span class="skill-tag">SharePoint</span>
+                        <span class="skill-tag">Oracle</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Blockchain & DeFi</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Web3 Integration</span>
+                        <span class="skill-tag">MetaMask</span>
+                        <span class="skill-tag">1inch API</span>
+                        <span class="skill-tag">Arbitrage Algorithms</span>
+                        <span class="skill-tag">Cryptocurrency Trading</span>
+                        <span class="skill-tag">DeFi Protocols</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Security & Testing</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Burp Suite</span>
+                        <span class="skill-tag">Penetration Testing</span>
+                        <span class="skill-tag">Security Testing</span>
+                        <span class="skill-tag">Vulnerability Assessment</span>
+                        <span class="skill-tag">Quality Control</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Cloud & DevOps</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">AWS Cloud Services</span>
+                        <span class="skill-tag">AWS Cloud Quest</span>
+                        <span class="skill-tag">System Administration</span>
+                        <span class="skill-tag">Technology Adoption</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>AI & Data Science</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">IBM Watson</span>
+                        <span class="skill-tag">AI Chatbots</span>
+                        <span class="skill-tag">Python for Data Science</span>
+                        <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">Llama-3-8B-Instruct</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="contact-section">
+                <h2 class="section-title">Let's Build Something Amazing</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--text-secondary);">
+                    Ready to tackle your next enterprise challenge? I'm available immediately for international opportunities with relocation support.
+                </p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📍</span>
+                        <span>Based in Accra, Ghana</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>🌍</span>
+                        <span>Available for international opportunities</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>✈️</span>
+                        <span>Visa sponsorship required</span>
+                    </div>
+                </div>
+                
+                <div class="cta-buttons">
+                    <a href="mailto:amjadkamara@aol.co.uk" class="btn btn-primary">Email Me</a>
+                    <a href="https://github.com/amjadkamara" class="btn btn-secondary">GitHub Profile</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Amjad Mohamed Kamara. All rights reserved. | IT Specialist & Full-Stack Developer</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">16+ years delivering enterprise solutions • 2014 Civic Codeathon Winner • Available immediately for international opportunities</p>
 
