@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Keno Time Predictor V5</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .version-badge {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .current-time {
+            text-align: center;
+            font-size: 1.8em;
+            color: #ffd700;
+            margin-bottom: 20px;
+        }
+
+        .countdown-timer {
+            text-align: center;
+            font-size: 2.2em;
+            color: #ff6b6b;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+
+        .countdown-label {
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
+        }
+
+        .prediction-section {
+            grid-column: 1 / -1;
+        }
+
+        .controls-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        .ball-selector {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .ball-count-input {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .ball-count-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            outline: none;
+        }
+
+        .ball-count-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #ffd700;
+            cursor: pointer;
+        }
+
+        .multiplier-display {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            padding: 10px 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .time-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .time-input {
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+        }
+
+        .time-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+        }
+
+        .optimal-times {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .time-chip {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .time-chip:hover {
+            transform: scale(1.05);
+            border-color: #ffd700;
+        }
+
+        .time-chip.active {
+            border-color: #ffd700;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+        }
+
+        .prediction-results {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .confidence-meter {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .confidence-bar {
+            flex: 1;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ffd700, #4ecdc4);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .number-ball {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .number-ball.hot {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+        }
+
+        .number-ball.warm {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+        }
+
+        .number-ball.cold {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+        }
+
+        .number-ball:hover {
+            transform: scale(1.1);
+            border-color: white;
+        }
+
+        .number-ball.selected {
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+
+        .game-tracking {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+
+        .tracking-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .tracking-input {
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .insights-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .insight-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .hot-cold-numbers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .mini-ball {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .mini-ball.always-hot {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+        }
+
+        .mini-ball.always-cold {
+            background: linear-gradient(45deg, #74b9ff, #0984e3);
+            color: white;
+        }
+
+        .results-history {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .win-indicator {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .win-indicator.win {
+            background: linear-gradient(45deg, #00b894, #00a085);
+        }
+
+        .win-indicator.loss {
+            background: linear-gradient(45deg, #d63031, #b71c1c);
+        }
+
+        .alert {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .insights-panel {
+                grid-template-columns: 1fr;
+            }
+            
+            .time-selector {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .numbers-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Advanced Keno Time Predictor</h1>
+            <div class="version-badge">Version 5.0 - Greece KENO 20/80</div>
+            <p>Real-time predictions with timing correction & flexible ball selection</p>
+            <div class="current-time" id="currentTime"></div>
+        </div>
+
+        <div class="dashboard">
+            <div class="card">
+                <h3>🕐 Current Time Window</h3>
+                <div id="currentWindow"></div>
+                <div id="windowStats"></div>
+            </div>
+
+            <div class="card">
+                <h3>⏰ Next Draw Countdown</h3>
+                <div class="countdown-label">Time until next draw:</div>
+                <div class="countdown-timer" id="countdownTimer">00:00</div>
+                <div id="nextDrawTime"></div>
+            </div>
+
+            <div class="card">
+                <h3>📊 Session Stats</h3>
+                <div id="sessionStats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="gamesPlayed">0</div>
+                        <div>Games Played</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="winRate">0%</div>
+                        <div>Win Rate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card prediction-section">
+            <h2>🎲 Advanced Predictions</h2>
+            
+            <div class="controls-section">
+                <div class="ball-selector">
+                    <h3>🎱 Ball Selection</h3>
+                    <div class="ball-count-input">
+                        <span>Balls to play:</span>
+                        <input type="range" min="1" max="8" value="4" class="ball-count-slider" id="ballCountSlider">
+                        <span id="ballCountDisplay">4</span>
+                    </div>
+                    <div class="multiplier-display" id="multiplierDisplay">
+                        Potential Multiplier: 240.0x
+                    </div>
+                </div>
+
+                <div>
+                    <h3>🕐 Time Selection</h3>
+                    <div class="time-selector">
+                        <input type="time" id="targetTime" class="time-input" placeholder="Select time">
+                        <button class="btn btn-primary" onclick="generatePrediction()">🔮 Predict</button>
+                        <button class="btn btn-secondary" onclick="useCurrentTime()">⏰ Now</button>
+                        <button class="btn btn-secondary" onclick="findOptimalWindow()">🎯 Optimal</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="optimal-times">
+                <div class="time-chip" onclick="selectTime('05:35')">
+                    <div><strong>5:35 AM</strong></div>
+                    <div>Score: 92.1</div>
+                </div>
+                <div class="time-chip" onclick="selectTime('07:05')">
+                    <div><strong>7:05 AM</strong></div>
+                    <div>Score: 91.9</div>
+                </div>
+                <div class="time-chip" onclick="selectTime('10:20')">
+                    <div><strong>10:20 AM</strong></div>
+                    <div>Score: 91.7</div>
+                </div>
+                <div class="time-chip" onclick="selectTime('06:45')">
+                    <div><strong>6:45 AM</strong></div>
+                    <div>Score: 91.5</div>
+                </div>
+                <div class="time-chip" onclick="selectTime('16:35')">
+                    <div><strong>4:35 PM</strong></div>
+                    <div>Score: 91.5</div>
+                </div>
+            </div>
+
+            <div class="prediction-results" id="predictionResults" style="display: none;">
+                <div class="confidence-meter">
+                    <span>Confidence:</span>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" id="confidenceFill"></div>
+                    </div>
+                    <span id="confidenceText">0%</span>
+                </div>
+
+                <div id="alertMessage" class="alert" style="display: none;"></div>
+
+                <h3>🔥 Recommended Numbers (Timing Corrected)</h3>
+                <div class="numbers-grid" id="numbersGrid"></div>
+
+                <div class="game-tracking">
+                    <h3>🎮 Game Tracking</h3>
+                    <div class="tracking-controls">
+                        <button class="btn btn-primary" onclick="markAsPlayed()">✅ Mark as Played</button>
+                        <input type="text" class="tracking-input" id="actualResults" 
+                               placeholder="Enter actual draw results (e.g., 1,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,78,79,80,2)">
+                        <button class="btn btn-secondary" onclick="submitResults()">📊 Submit Results</button>
+                    </div>
+                    <div class="results-history" id="resultsHistory"></div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="historicalDraws">0</div>
+                        <div>Historical Draws</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="consistencyScore">0%</div>
+                        <div>Consistency</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="timeWindow">--</div>
+                        <div>Optimal Window</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="timingOffset">+0min</div>
+                        <div>Timing Offset</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="insights-panel">
+            <div class="insight-card">
+                <h3>🔥 Always Hot Numbers</h3>
+                <p>Most frequent across all time periods</p>
+                <div class="hot-cold-numbers" id="alwaysHotNumbers"></div>
+            </div>
+
+            <div class="insight-card">
+                <h3>🧊 Always Cold Numbers</h3>
+                <p>Least frequent across all time periods</p>
+                <div class="hot-cold-numbers" id="alwaysColdNumbers"></div>
+            </div>
+
+            <div class="insight-card">
+                <h3>⭐ Top Active Hours</h3>
+                <div id="topActiveHours"></div>
+            </div>
+
+            <div class="insight-card">
+                <h3>🎯 Best 5-Min Intervals</h3>
+                <div id="topIntervals"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced Keno Configuration V5 with timing correction
+        const KENO_TIME_CONFIG_V5 = {
+            TOTAL_DRAWS: 13649,
+            ANALYSIS_VERSION: "5.0",
+            DEFAULT_BALL_COUNT: 4, // From Python export
+            TIMING_OFFSET_MINUTES: -5, // Correction for early prediction issue
+            DRAW_INTERVAL_MINUTES: 5,
+            MULTIPLIERS: {
+                1: 3.6, 2: 15.0, 3: 60.0, 4: 240.0,
+                5: 1000.0, 6: 3800.0, 7: 12500.0, 8: 35000.0
+            },
+            OPTIMAL_TIMES: ["05:35", "07:05", "10:20", "06:45", "16:35", "04:00", "07:10", "01:40", "03:35", "15:45"],
+            ALWAYS_HOT_NUMBERS: [37, 40, 19, 29, 64, 47, 25, 31, 70, 63],
+            ALWAYS_COLD_NUMBERS: [8, 12, 43, 58, 72, 75, 77, 79, 80, 3],
+            TOP_ACTIVE_HOURS: ["05:00-06:00", "07:00-08:00", "10:00-11:00", "15:00-16:00", "19:00-20:00"],
+            TOP_INTERVALS: ["05:35", "07:05", "10:20", "15:35", "19:25"],
+            TIME_PATTERNS: {
+                "05:35": {
+                    "hot_numbers": [37, 40, 19, 29, 64, 47, 55, 2, 21, 18, 65, 74, 48, 36, 25],
+                    "total_draws": 95,
+                    "consistency": 17.05,
+                    "combinations": [
+                        {"numbers": [2, 37], "frequency": 17},
+                        {"numbers": [29, 78], "frequency": 16},
+                        {"numbers": [37, 40], "frequency": 16}
+                    ]
+                },
+                "07:05": {
+                    "hot_numbers": [40, 63, 49, 59, 54, 5, 28, 80, 9, 3, 15, 73, 78, 19, 53],
+                    "total_draws": 95,
+                    "consistency": 17.32,
+                    "combinations": [
+                        {"numbers": [54, 59], "frequency": 17},
+                        {"numbers": [19, 63], "frequency": 16},
+                        {"numbers": [28, 63], "frequency": 15}
+                    ]
+                },
+                "10:20": {
+                    "hot_numbers": [31, 27, 25, 71, 52, 50, 20, 35, 73, 74, 28, 45, 37, 47, 1],
+                    "total_draws": 95,
+                    "consistency": 17.05,
+                    "combinations": [
+                        {"numbers": [47, 52], "frequency": 16},
+                        {"numbers": [28, 52], "frequency": 16},
+                        {"numbers": [25, 71], "frequency": 15}
+                    ]
+                },
+                "06:45": {
+                    "hot_numbers": [70, 64, 30, 37, 74, 66, 57, 76, 79, 69, 71, 47, 28, 56, 24],
+                    "total_draws": 95,
+                    "consistency": 16.74,
+                    "combinations": [
+                        {"numbers": [37, 64], "frequency": 16},
+                        {"numbers": [30, 70], "frequency": 16},
+                        {"numbers": [64, 70], "frequency": 16}
+                    ]
+                },
+                "16:35": {
+                    "hot_numbers": [68, 6, 33, 22, 17, 35, 25, 2, 29, 78, 10, 30, 54, 40, 20],
+                    "total_draws": 95,
+                    "consistency": 17.0,
+                    "combinations": [
+                        {"numbers": [40, 68], "frequency": 15},
+                        {"numbers": [6, 40], "frequency": 15},
+                        {"numbers": [17, 68], "frequency": 15}
+                    ]
+                }
+            }
+        };
+
+        // Global variables
+        let selectedNumbers = new Set();
+        let currentPrediction = null;
+        let sessionStats = { played: 0, wins: 0, history: [] };
+        let ballCount = KENO_TIME_CONFIG_V5.DEFAULT_BALL_COUNT;
+
+        // Initialize application
+        function initializeApp() {
+            setupBallCountSlider();
+            updateCurrentTime();
+            setupCountdownTimer();
+            displayInsights();
+            updateSessionStats();
+            
+            setInterval(updateCurrentTime, 1000);
+            setInterval(updateCountdown, 1000);
+        }
+
+        function setupBallCountSlider() {
+            const slider = document.getElementById('ballCountSlider');
+            const display = document.getElementById('ballCountDisplay');
+            const multiplierDisplay = document.getElementById('multiplierDisplay');
+            
+            slider.value = ballCount;
+            display.textContent = ballCount;
+            multiplierDisplay.textContent = `Potential Multiplier: ${KENO_TIME_CONFIG_V5.MULTIPLIERS[ballCount]}x`;
+            
+            slider.addEventListener('input', function() {
+                ballCount = parseInt(this.value);
+                display.textContent = ballCount;
+                multiplierDisplay.textContent = `Potential Multiplier: ${KENO_TIME_CONFIG_V5.MULTIPLIERS[ballCount]}x`;
+                
+                // Regenerate prediction if one exists
+                if (currentPrediction) {
+                    generatePrediction();
+                }
+            });
+        }
+
+        function formatTime12Hour(timeString) {
+            if (!timeString) return timeString;
+            
+            const [hours, minutes] = timeString.split(':');
+            const hour24 = parseInt(hours);
+            const hour12 = hour24 === 0 ? 12 : hour24 > 12 ? hour24 - 12 : hour24;
+            const ampm = hour24 >= 12 ? 'PM' : 'AM';
+            
+            return `${hour12}:${minutes} ${ampm}`;
+        }
+
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = formatTime12Hour(now.toTimeString().slice(0, 5));
+            const currentTimeKey = now.getHours().toString().padStart(2, '0') + ':' + 
+                                  now.getMinutes().toString().padStart(2, '0');
+            
+            document.getElementById('currentTime').textContent = timeString;
+            
+            const windowInfo = getCurrentTimeWindow(currentTimeKey);
+            document.getElementById('currentWindow').innerHTML = `
+                <div style="font-size: 1.2em; margin-bottom: 10px;">
+                    <strong>${windowInfo.window}</strong>
+                </div>
+                <div>Status: ${windowInfo.status}</div>
+            `;
+        }
+
+        function getCurrentTimeWindow(timeKey) {
+            const [hour, minute] = timeKey.split(':').map(Number);
+            let window, status;
+            
+            const windowStart = Math.floor(minute / 5) * 5;
+            const windowEnd = windowStart + 4;
+            
+            window = `${formatTime12Hour(hour.toString().padStart(2, '0') + ':' + windowStart.toString().padStart(2, '0'))} - ${formatTime12Hour(hour.toString().padStart(2, '0') + ':' + windowEnd.toString().padStart(2, '0'))}`;
+            
+            if (KENO_TIME_CONFIG_V5.OPTIMAL_TIMES.includes(timeKey)) {
+                status = "🔥 OPTIMAL TIME";
+            } else {
+                status = "⏳ Standard Time";
+            }
+            
+            return { window, status };
+        }
+
+        function setupCountdownTimer() {
+            updateCountdown();
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            
+            const nextDrawMinute = Math.ceil(minutes / 5) * 5;
+            const minutesUntilNext = (nextDrawMinute - minutes) % 5;
+            const secondsUntilNext = (60 - seconds) % 60;
+            
+            const totalSecondsLeft = minutesUntilNext * 60 + secondsUntilNext;
+            const displayMinutes = Math.floor(totalSecondsLeft / 60);
+            const displaySeconds = totalSecondsLeft % 60;
+            
+            document.getElementById('countdownTimer').textContent = 
+                `${displayMinutes.toString().padStart(2, '0')}:${displaySeconds.toString().padStart(2, '0')}`;
+            
+            const nextDrawTime = new Date(now);
+            nextDrawTime.setMinutes(nextDrawMinute, 0, 0);
+            if (nextDrawMinute <= minutes) {
+                nextDrawTime.setHours(nextDrawTime.getHours() + 1);
+            }
+            
+            document.getElementById('nextDrawTime').textContent = 
+                `Next draw: ${formatTime12Hour(nextDrawTime.toTimeString().slice(0, 5))}`;
+        }
+
+        function displayInsights() {
+            // Always hot numbers
+            const hotContainer = document.getElementById('alwaysHotNumbers');
+            hotContainer.innerHTML = '';
+            KENO_TIME_CONFIG_V5.ALWAYS_HOT_NUMBERS.forEach(num => {
+                const ball = document.createElement('div');
+                ball.className = 'mini-ball always-hot';
+                ball.textContent = num;
+                hotContainer.appendChild(ball);
+            });
+
+            // Always cold numbers
+            const coldContainer = document.getElementById('alwaysColdNumbers');
+            coldContainer.innerHTML = '';
+            KENO_TIME_CONFIG_V5.ALWAYS_COLD_NUMBERS.forEach(num => {
+                const ball = document.createElement('div');
+                ball.className = 'mini-ball always-cold';
+                ball.textContent = num;
+                coldContainer.appendChild(ball);
+            });
+
+            // Top active hours
+            const hoursContainer = document.getElementById('topActiveHours');
+            hoursContainer.innerHTML = KENO_TIME_CONFIG_V5.TOP_ACTIVE_HOURS.map((hour, index) => 
+                `<div style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    ${index + 1}. ${hour.split('-').map(h => formatTime12Hour(h)).join(' - ')}
+                </div>`
+            ).join('');
+
+            // Top intervals
+            const intervalsContainer = document.getElementById('topIntervals');
+            intervalsContainer.innerHTML = KENO_TIME_CONFIG_V5.TOP_INTERVALS.map((interval, index) => 
+                `<div style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    ${index + 1}. ${formatTime12Hour(interval)}
+                </div>`
+            ).join('');
+        }
+
+        function selectTime(time) {
+            document.getElementById('targetTime').value = time;
+            
+            // Update active time chip
+            document.querySelectorAll('.time-chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            event.target.closest('.time-chip').classList.add('active');
+            
+            generatePrediction();
+        }
+
+        function useCurrentTime() {
+            const now = new Date();
+            const currentTime = now.getHours().toString().padStart(2, '0') + ':' + 
+                               now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('targetTime').value = currentTime;
+            generatePrediction();
+        }
+
+        function findOptimalWindow() {
+            const now = new Date();
+            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+            
+            // Find the next optimal time
+            const optimalTimes = KENO_TIME_CONFIG_V5.OPTIMAL_TIMES;
+            let nextOptimal = null;
+            let minDiff = Infinity;
+            
+            for (let time of optimalTimes) {
+                const [hour, minute] = time.split(':').map(Number);
+                const timeMinutes = hour * 60 + minute;
+                let diff = timeMinutes - currentMinutes;
+                
+                if (diff < 0) diff += 24 * 60; // Next day
+                
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    nextOptimal = time;
+                }
+            }
+            
+            document.getElementById('targetTime').value = nextOptimal;
+            generatePrediction();
+            
+            showAlert(`🎯 Next optimal time: ${formatTime12Hour(nextOptimal)} (in ${Math.floor(minDiff / 60)}h ${minDiff % 60}m)`);
+        }
+
+        function generatePrediction() {
+            const targetTime = document.getElementById('targetTime').value;
+            if (!targetTime) {
+                showAlert("⚠️ Please select a target time first!");
+                return;
+            }
+
+            const prediction = analyzePrediction(targetTime);
+            displayPrediction(prediction);
+        }
+
+        function analyzePrediction(timeKey) {
+            // Apply timing correction
+            const correctedTime = applyTimingCorrection(timeKey);
+            const timePattern = KENO_TIME_CONFIG_V5.TIME_PATTERNS[correctedTime] || 
+                              KENO_TIME_CONFIG_V5.TIME_PATTERNS[timeKey];
+            
+            if (!timePattern) {
+                return {
+                    confidence: 60,
+                    numbers: KENO_TIME_CONFIG_V5.ALWAYS_HOT_NUMBERS.slice(0, ballCount),
+                    combinations: [],
+                    isOptimal: false,
+                    timeWindow: "Unknown",
+                    strategy: "Using global hot numbers - limited historical data",
+                    timingOffset: KENO_TIME_CONFIG_V5.TIMING_OFFSET_MINUTES
+                };
+            }
+
+            const confidence = calculateConfidence(timePattern);
+            const isOptimal = KENO_TIME_CONFIG_V5.OPTIMAL_TIMES.includes(timeKey);
+            
+            // Select numbers based on ball count
+            const selectedNumbers = selectOptimalNumbers(timePattern.hot_numbers, ballCount);
+            
+            return {
+                confidence: confidence,
+                numbers: selectedNumbers,
+                combinations: timePattern.combinations || [],
+                isOptimal: isOptimal,
+                timeWindow: getCurrentTimeWindow(timeKey).window,
+                totalDraws: timePattern.total_draws,
+                consistency: timePattern.consistency,
+                strategy: generateStrategy(timePattern, confidence, ballCount),
+                timingOffset: KENO_TIME_CONFIG_V5.TIMING_OFFSET_MINUTES
+            };
+        }
+
+        function applyTimingCorrection(timeKey) {
+            const [hour, minute] = timeKey.split(':').map(Number);
+            const correctedMinute = minute + KENO_TIME_CONFIG_V5.TIMING_OFFSET_MINUTES;
+            
+            if (correctedMinute < 0) {
+                return `${(hour - 1).toString().padStart(2, '0')}:${(60 + correctedMinute).toString().padStart(2, '0')}`;
+            } else if (correctedMinute >= 60) {
+                return `${(hour + 1).toString().padStart(2, '0')}:${(correctedMinute - 60).toString().padStart(2, '0')}`;
+            }
+            
+            return `${hour.toString().padStart(2, '0')}:${correctedMinute.toString().padStart(2, '0')}`;
+        }
+
+        function selectOptimalNumbers(hotNumbers, count) {
+            // Mix hot numbers with always hot numbers for better coverage
+            const mixed = [...new Set([...hotNumbers.slice(0, count * 2), ...KENO_TIME_CONFIG_V5.ALWAYS_HOT_NUMBERS])];
+            return mixed.slice(0, count);
+        }
+
+        function calculateConfidence(pattern) {
+            const base = 50;
+            const drawBoost = Math.min(pattern.total_draws * 1.5, 25);
+            const consistencyBoost = pattern.consistency * 0.4;
+            const comboBoost = pattern.combinations ? pattern.combinations.length * 2 : 0;
+            
+            return Math.min(base + drawBoost + consistencyBoost + comboBoost, 95);
+        }
+
+        function generateStrategy(pattern, confidence, ballCount) {
+            const strategies = [];
+            const multiplier = KENO_TIME_CONFIG_V5.MULTIPLIERS[ballCount];
+            
+            if (confidence >= 85) {
+                strategies.push(`🔥 High confidence - Play ${ballCount} balls for ${multiplier}x potential`);
+                strategies.push("💎 Timing corrected for optimal hit rate");
+                strategies.push(`🎯 Expected: ${Math.ceil(ballCount * 0.7)}-${ballCount} numbers to hit`);
+            } else if (confidence >= 75) {
+                strategies.push(`⚡ Good patterns - ${ballCount} balls at ${multiplier}x multiplier`);
+                strategies.push("🔄 Consider reducing ball count for safer play");
+                strategies.push(`📊 Expected: ${Math.ceil(ballCount * 0.5)}-${Math.ceil(ballCount * 0.8)} numbers to hit`);
+            } else {
+                strategies.push("⚠️ Lower confidence - Consider waiting for optimal time");
+                strategies.push(`🛡️ Conservative play: reduce to ${Math.max(1, ballCount - 2)} balls`);
+                strategies.push(`📈 Expected: ${Math.ceil(ballCount * 0.3)}-${Math.ceil(ballCount * 0.6)} numbers to hit`);
+            }
+            
+            return strategies;
+        }
+
+        function displayPrediction(prediction) {
+            currentPrediction = prediction;
+            
+            // Show results section
+            document.getElementById('predictionResults').style.display = 'block';
+            
+            // Update confidence meter
+            const confidenceFill = document.getElementById('confidenceFill');
+            const confidenceText = document.getElementById('confidenceText');
+            confidenceFill.style.width = prediction.confidence + '%';
+            confidenceText.textContent = Math.round(prediction.confidence) + '%';
+            
+            // Show alert for optimal times
+            const alertMessage = document.getElementById('alertMessage');
+            if (prediction.isOptimal) {
+                alertMessage.style.display = 'block';
+                alertMessage.textContent = `🔥 OPTIMAL TIME! Timing-corrected prediction for ${ballCount} balls at ${KENO_TIME_CONFIG_V5.MULTIPLIERS[ballCount]}x multiplier!`;
+            } else {
+                alertMessage.style.display = 'none';
+            }
+            
+            // Display numbers
+            displayNumbers(prediction.numbers);
+            
+            // Update stats
+            document.getElementById('historicalDraws').textContent = prediction.totalDraws || 'N/A';
+            document.getElementById('consistencyScore').textContent = 
+                prediction.consistency ? Math.round(prediction.consistency) + '%' : 'N/A';
+            document.getElementById('timeWindow').textContent = prediction.timeWindow;
+            document.getElementById('timingOffset').textContent = 
+                `${prediction.timingOffset > 0 ? '+' : ''}${prediction.timingOffset}min`;
+        }
+
+        function displayNumbers(numbers) {
+            const grid = document.getElementById('numbersGrid');
+            grid.innerHTML = '';
+            
+            numbers.forEach((number, index) => {
+                const ball = document.createElement('div');
+                ball.className = 'number-ball';
+                ball.textContent = number;
+                ball.onclick = () => toggleNumber(ball, number);
+                
+                // Color based on priority
+                if (index < Math.ceil(ballCount * 0.4)) {
+                    ball.classList.add('hot');
+                } else if (index < Math.ceil(ballCount * 0.7)) {
+                    ball.classList.add('warm');
+                } else {
+                    ball.classList.add('cold');
+                }
+                
+                grid.appendChild(ball);
+            });
+        }
+
+        function toggleNumber(ball, number) {
+            if (selectedNumbers.has(number)) {
+                selectedNumbers.delete(number);
+                ball.classList.remove('selected');
+            } else {
+                selectedNumbers.add(number);
+                ball.classList.add('selected');
+            }
+        }
+
+        function markAsPlayed() {
+            if (!currentPrediction) {
+                showAlert("⚠️ Generate a prediction first!");
+                return;
+            }
+            
+            const playedNumbers = Array.from(selectedNumbers).length > 0 ? 
+                                 Array.from(selectedNumbers) : 
+                                 currentPrediction.numbers.slice(0, ballCount);
+            
+            const gameData = {
+                time: new Date().toLocaleTimeString(),
+                numbers: playedNumbers,
+                ballCount: ballCount,
+                multiplier: KENO_TIME_CONFIG_V5.MULTIPLIERS[ballCount],
+                confidence: currentPrediction.confidence,
+                status: 'played'
+            };
+            
+            sessionStats.played++;
+            sessionStats.history.unshift(gameData);
+            
+            updateSessionStats();
+            showAlert(`✅ Marked as played: ${playedNumbers.join(', ')} (${ballCount} balls at ${gameData.multiplier}x)`);
+        }
+
+        function submitResults() {
+            const resultsInput = document.getElementById('actualResults');
+            const actualResults = resultsInput.value.trim();
+            
+            if (!actualResults) {
+                showAlert("⚠️ Enter the actual draw results!");
+                return;
+            }
+            
+            if (sessionStats.history.length === 0 || sessionStats.history[0].status !== 'played') {
+                showAlert("⚠️ Mark a game as played first!");
+                return;
+            }
+            
+            const actualNumbers = actualResults.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+            const lastGame = sessionStats.history[0];
+            const matches = lastGame.numbers.filter(n => actualNumbers.includes(n));
+            
+            const isWin = matches.length === lastGame.ballCount;
+            
+            lastGame.actualResults = actualNumbers;
+            lastGame.matches = matches;
+            lastGame.matchCount = matches.length;
+            lastGame.status = isWin ? 'win' : 'loss';
+            
+            if (isWin) {
+                sessionStats.wins++;
+                showAlert(`🎉 WIN! All ${lastGame.ballCount} numbers matched! Payout: ${lastGame.multiplier}x`);
+            } else {
+                showAlert(`❌ ${matches.length}/${lastGame.ballCount} numbers matched: ${matches.join(', ')}`);
+            }
+            
+            updateSessionStats();
+            displayResultsHistory();
+            resultsInput.value = '';
+        }
+
+        function updateSessionStats() {
+            document.getElementById('gamesPlayed').textContent = sessionStats.played;
+            document.getElementById('winRate').textContent = 
+                sessionStats.played > 0 ? Math.round((sessionStats.wins / sessionStats.played) * 100) + '%' : '0%';
+        }
+
+        function displayResultsHistory() {
+            const historyContainer = document.getElementById('resultsHistory');
+            historyContainer.innerHTML = '';
+            
+            sessionStats.history.slice(0, 5).forEach(game => {
+                const item = document.createElement('div');
+                item.className = 'result-item';
+                
+                const status = game.status === 'win' ? 'WIN' : 
+                              game.status === 'loss' ? 'LOSS' : 'PENDING';
+                const statusClass = game.status === 'win' ? 'win' : 'loss';
+                
+                item.innerHTML = `
+                    <div>
+                        <div>${game.time} - ${game.ballCount} balls</div>
+                        <div style="font-size: 0.9em; opacity: 0.8;">
+                            ${game.numbers.slice(0, 6).join(', ')}${game.numbers.length > 6 ? '...' : ''}
+                        </div>
+                        ${game.matchCount !== undefined ? 
+                          `<div style="font-size: 0.8em; color: #ffd700;">Matched: ${game.matchCount}/${game.ballCount}</div>` : 
+                          ''}
+                    </div>
+                    <div class="win-indicator ${statusClass}">${status}</div>
+                `;
+                
+                historyContainer.appendChild(item);
+            });
+        }
+
+        function showAlert(message) {
+            const alertDiv = document.getElementById('alertMessage');
+            alertDiv.textContent = message;
+            alertDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                alertDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Initialize the application
+        initializeApp();
+
+        // Auto-generate prediction for current time if it's optimal
+        setTimeout(() => {
+            const now = new Date();
+            const currentTime = now.getHours().toString().padStart(2, '0') + ':' + 
+                               now.getMinutes().toString().padStart(2, '0');
+            
+            if (KENO_TIME_CONFIG_V5.OPTIMAL_TIMES.includes(currentTime)) {
+                useCurrentTime();
+                showAlert(`🎯 Current time ${formatTime12Hour(currentTime)} is optimal! Auto-generating prediction...`);
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
