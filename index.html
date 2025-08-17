@@ -83,18 +83,6 @@
             align-items: center;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%23ffffff02" points="0,0 1000,300 1000,1000 0,700"/></svg>');
-            z-index: 1;
         }
         
         .hero-content {
@@ -188,11 +176,13 @@
             border-radius: 10px;
             text-align: center;
             border: 1px solid var(--border-color);
-            transition: transform 0.3s ease;
+            transition: all 0.4s ease;
         }
         
         .stat-card:hover {
             transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(88, 166, 255, 0.2);
         }
         
         .stat-number {
@@ -253,7 +243,13 @@
             border-radius: 10px;
             padding: 2rem;
             margin-bottom: 2rem;
-            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover {
+            transform: translateX(10px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(88, 166, 255, 0.2);
         }
         
         .timeline-date {
@@ -286,7 +282,7 @@
             position: relative;
         }
         
-        .timeline-achievements li::before {
+        .timeline-achievements li:before {
             content: '▶';
             position: absolute;
             left: 0;
@@ -305,12 +301,13 @@
             border: 1px solid var(--border-color);
             border-radius: 10px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
         }
         
         .project-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
             border-color: var(--accent-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
         
         .project-header {
@@ -442,8 +439,9 @@
         }
         
         .badge:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
             border-color: var(--accent-color);
+            box-shadow: 0 8px 25px rgba(88, 166, 255, 0.3);
         }
         
         .badge-icon {
@@ -451,6 +449,12 @@
             height: 20px;
             background: var(--accent-color);
             border-radius: 50%;
+        }
+        
+        .innovation-section {
+            background: var(--secondary-color);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
         }
     </style>
 </head>
@@ -462,6 +466,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#innovation">Innovation</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -475,9 +480,9 @@
                 <h1>IT Specialist & Full-Stack Developer</h1>
                 <p class="subtitle">15+ Years of Enterprise Solutions & Innovation</p>
                 <p class="description">
-                    Delivering secure, scalable applications for UN agencies, government ministries, 
-                    and multinational corporations. Trained at international headquarters including 
-                    Ericsson Bahrain, with proven expertise spanning telecoms, healthcare, and DeFi solutions.
+                    Innovative problem solver passionate about technology with proven expertise spanning telecoms, 
+                    healthcare, and DeFi solutions. I think critically, love challenges, and am constantly curious 
+                    about emerging technologies like AI, blockchain, and wearable technology that can improve millions of lives.
                 </p>
                 
                 <div class="badge-section">
@@ -487,7 +492,7 @@
                     </div>
                     <div class="badge">
                         <div class="badge-icon"></div>
-                        <span>Llama-3-8B-Instruct Q4</span>
+                        <span>Wearable Tech Enthusiast</span>
                     </div>
                     <div class="badge">
                         <div class="badge-icon"></div>
@@ -532,7 +537,7 @@
             <h2 class="section-title">Professional Experience</h2>
             <div class="experience-timeline">
                 <div class="timeline-item">
-                    <div class="timeline-date">2019 – Present</div>
+                    <div class="timeline-date">2019 — Present</div>
                     <h3 class="timeline-title">Freelance IT Consultant</h3>
                     <p class="timeline-company">International Projects | Government & Healthcare Sectors</p>
                     <ul class="timeline-achievements">
@@ -545,7 +550,7 @@
                 </div>
                 
                 <div class="timeline-item">
-                    <div class="timeline-date">Oct 2016 – Dec 2018</div>
+                    <div class="timeline-date">Oct 2016 — Dec 2018</div>
                     <h3 class="timeline-title">Systems Database Technician</h3>
                     <p class="timeline-company">Office of the Chief of Staff, State House | Government of Sierra Leone</p>
                     <ul class="timeline-achievements">
@@ -558,7 +563,7 @@
                 </div>
                 
                 <div class="timeline-item">
-                    <div class="timeline-date">2011 – 2016</div>
+                    <div class="timeline-date">2011 — 2016</div>
                     <h3 class="timeline-title">Head of IT & Founder</h3>
                     <p class="timeline-company">Aadios Systems (SL) Ltd. | Managed Services Provider</p>
                     <ul class="timeline-achievements">
@@ -571,7 +576,7 @@
                 </div>
                 
                 <div class="timeline-item">
-                    <div class="timeline-date">Jul 2008 – Jan 2011</div>
+                    <div class="timeline-date">Jul 2008 — Jan 2011</div>
                     <h3 class="timeline-title">Systems Developer</h3>
                     <p class="timeline-company">Bharti Airtel Limited | International Telecommunications (Formerly Celtel → Zain → Airtel)</p>
                     <ul class="timeline-achievements">
@@ -584,7 +589,7 @@
                 </div>
                 
                 <div class="timeline-item">
-                    <div class="timeline-date">Mar 2008 – Jul 2008</div>
+                    <div class="timeline-date">Mar 2008 — Jul 2008</div>
                     <h3 class="timeline-title">Web Database Consultant</h3>
                     <p class="timeline-company">United Nations Integrated Peace-building Office (UNIPSIL)</p>
                     <ul class="timeline-achievements">
@@ -596,7 +601,7 @@
                 </div>
                 
                 <div class="timeline-item">
-                    <div class="timeline-date">Jan 2008 – Mar 2008</div>
+                    <div class="timeline-date">Jan 2008 — Mar 2008</div>
                     <h3 class="timeline-title">Database Consultant</h3>
                     <p class="timeline-company">United Nations Integrated Peace-building Office (UNIPSIL)</p>
                     <ul class="timeline-achievements">
@@ -609,7 +614,7 @@
                 </div>
                 
                 <div class="timeline-item">
-                    <div class="timeline-date">Jan 2007 – Nov 2007</div>
+                    <div class="timeline-date">Jan 2007 — Nov 2007</div>
                     <h3 class="timeline-title">Web Designer/Programmer</h3>
                     <p class="timeline-company">SBTS Group | IT Consultancy</p>
                     <ul class="timeline-achievements">
@@ -652,15 +657,18 @@
                 <div class="project-card">
                     <div class="project-header">
                         <h3 class="project-title">Health Education Library System</h3>
-                        <p class="project-type">Johns Hopkins • International Contract</p>
+                        <p class="project-type">Breakthrough ACTION • International Contract</p>
                     </div>
                     <div class="project-body">
-                        <p>Won competitive international bidding for $7,429 Breakthrough ACTION contract. Developed comprehensive database system for Sierra Leone's Directorate of Health Security and Emergencies, including training for 20+ administrators.</p>
+                        <p>Won competitive international bidding (ICB) for $7,429 Breakthrough ACTION contract sponsored by Johns Hopkins University. Developed comprehensive database system for Sierra Leone's Ministry of Health and Sanitation (MoHS) - Directorate of Health Security and Emergencies (DHSE), including training for 20+ administrators.</p>
                         <div class="project-tags">
                             <span class="project-tag">Database Design</span>
                             <span class="project-tag">Healthcare</span>
                             <span class="project-tag">International Bidding</span>
                             <span class="project-tag">Training</span>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <button onclick="showScreenshot('dhse-lib')" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">View Screenshot</button>
                         </div>
                     </div>
                 </div>
@@ -677,6 +685,9 @@
                             <span class="project-tag">Multi-Ministry</span>
                             <span class="project-tag">Web Portals</span>
                             <span class="project-tag">Training</span>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <button onclick="viewPortfolio()" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">View Web Portfolio PDF</button>
                         </div>
                     </div>
                 </div>
@@ -745,10 +756,64 @@
                             <span class="project-tag">Data Visualization</span>
                         </div>
                         <div style="margin-top: 1rem;">
-                            <a href="https://github.com/amjadkamara/advanced-keno-time-predictor-v5" target="_blank" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">View on GitHub</a>
+                            <a href="https://github.com/amjadkamara/advanced-keno-time-predictor-v5" target="_blank" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem; margin-right: 0.5rem;">View on GitHub</a>
+                            <a href="https://amjadkamara.github.io/live_demos/keno_demo/index.html" target="_blank" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Live Demo</a>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="innovation" class="section innovation-section">
+        <div class="container">
+            <h2 class="section-title">Wearable Technology Vision</h2>
+            <p style="text-align: center; font-size: 1.2rem; margin-bottom: 3rem; color: var(--text-secondary);">
+                Exploring the future of wearable technology that can genuinely improve lives and safety
+            </p>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Smart Climate Regulation Jacket</h3>
+                        <p class="project-type">Concept • Temperature Control Innovation</p>
+                    </div>
+                    <div class="project-body">
+                        <p>Imagine a jacket that could regulate temperature automatically - providing heat in winter and cooling in hot weather. Features embedded sensors that detect your body temperature and ensures optimal comfort through risk-free power sources integrated into the fabric. Designed to be unaffected by cleaning and daily wear.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Temperature Sensors</span>
+                            <span class="project-tag">Embedded Power</span>
+                            <span class="project-tag">Smart Fabric</span>
+                            <span class="project-tag">Climate Control</span>
+                            <span class="project-tag">Wearable IoT</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Driver Safety Smart System</h3>
+                        <p class="project-type">Concept • IoT Safety Integration</p>
+                    </div>
+                    <div class="project-body">
+                        <p>Revolutionary night driving system combining smart glasses for clear vision with advanced fatigue detection. Monitors eyelid movement, detects tiredness, nodding, and sleep patterns through head movement and eye tracking. Instantly communicates with a driving wristband that vibrates with beep warnings when drowsiness is detected, potentially integrating with vehicle IoT systems for automatic slowdown or self-driving takeover.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Smart Glasses</span>
+                            <span class="project-tag">Eye Tracking</span>
+                            <span class="project-tag">Fatigue Detection</span>
+                            <span class="project-tag">Vehicle IoT</span>
+                            <span class="project-tag">Safety Alerts</span>
+                            <span class="project-tag">Accident Prevention</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem; padding: 2rem; background: var(--primary-color); border-radius: 10px; border: 1px solid var(--border-color);">
+                <p style="font-style: italic; color: var(--text-secondary); font-size: 1.1rem;">
+                    "These are just playful explorations in the fascinating world of wearable technology. 
+                    The potential to create devices that genuinely improve lives, enhance safety, and solve real-world problems is what drives my passion for innovation."
+                </p>
             </div>
         </div>
     </section>
@@ -836,21 +901,21 @@
             <div class="contact-section">
                 <h2 class="section-title">Let's Build Something Amazing</h2>
                 <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--text-secondary);">
-                    Ready to tackle your next enterprise challenge? I'm available immediately for international opportunities with relocation support.
+                    Let's collaborate on impactful solutions that make a difference for communities worldwide. I'm passionate about projects that create meaningful social benefits and tackle interesting technological challenges.
                 </p>
                 
                 <div class="contact-info">
-                    <div class="contact-item">
-                        <span>📍</span>
-                        <span>Based in Accra, Ghana</span>
-                    </div>
                     <div class="contact-item">
                         <span>🌍</span>
                         <span>Available for international opportunities</span>
                     </div>
                     <div class="contact-item">
-                        <span>✈️</span>
-                        <span>Visa sponsorship required</span>
+                        <span>💡</span>
+                        <span>Open to impactful collaborations</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>🤝</span>
+                        <span>Passionate about community-driven projects</span>
                     </div>
                 </div>
                 
@@ -866,4 +931,143 @@
         <div class="container">
             <p>&copy; 2024 Amjad Mohamed Kamara. All rights reserved. | IT Specialist & Full-Stack Developer</p>
             <p style="margin-top: 0.5rem; font-size: 0.9rem;">16+ years delivering enterprise solutions • 2014 Civic Codeathon Winner • Available immediately for international opportunities</p>
+        </div>
+    </footer>
 
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Simple hover effects for interactive elements
+        const hoverElements = document.querySelectorAll('.stat-card, .project-card, .timeline-item, .badge, .btn');
+        
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = this.style.transform || '';
+            });
+        });
+
+        // Mobile menu toggle (basic functionality)
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (mobileMenu && navLinks) {
+            mobileMenu.addEventListener('click', function() {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            });
+        }
+
+        // Screenshot modal functionality
+        function showScreenshot(projectName) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+                cursor: pointer;
+            `;
+            
+            const img = document.createElement('img');
+            img.src = `project_screenshots/${projectName}.png`;
+            img.style.cssText = `
+                max-width: 90%;
+                max-height: 90%;
+                border-radius: 10px;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            `;
+            
+            modal.appendChild(img);
+            document.body.appendChild(modal);
+            
+            modal.addEventListener('click', () => {
+                document.body.removeChild(modal);
+            });
+            
+            // Handle image load error
+            img.addEventListener('error', () => {
+                modal.innerHTML = `
+                    <div style="color: white; text-align: center; font-size: 1.2rem;">
+                        <p>Screenshot not found</p>
+                        <p style="font-size: 0.9rem; opacity: 0.7;">Expected path: project_screenshots/${projectName}.png</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Portfolio PDF viewer
+        function viewPortfolio() {
+            const pdfPath = 'web_dev_portfolio.pdf';
+            
+            // Try to open in new tab first
+            const newWindow = window.open(pdfPath, '_blank');
+            
+            // If popup blocked or file doesn't exist, create a modal
+            setTimeout(() => {
+                if (!newWindow || newWindow.closed) {
+                    const modal = document.createElement('div');
+                    modal.style.cssText = `
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.9);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 10000;
+                        cursor: pointer;
+                    `;
+                    
+                    const content = document.createElement('div');
+                    content.style.cssText = `
+                        background: var(--secondary-color);
+                        padding: 2rem;
+                        border-radius: 10px;
+                        text-align: center;
+                        color: var(--text-primary);
+                        cursor: default;
+                    `;
+                    
+                    content.innerHTML = `
+                        <h3 style="margin-bottom: 1rem;">Web Development Portfolio</h3>
+                        <p style="margin-bottom: 1rem;">Contains detailed showcase of government and web projects</p>
+                        <a href="${pdfPath}" target="_blank" class="btn btn-primary" style="text-decoration: none;">Download PDF Portfolio</a>
+                    `;
+                    
+                    modal.appendChild(content);
+                    document.body.appendChild(modal);
+                    
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            document.body.removeChild(modal);
+                        }
+                    });
+                    
+                    content.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                }
+            }, 500);
+        }
+    </script>
+</body>
+</html>
