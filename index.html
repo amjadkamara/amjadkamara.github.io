@@ -456,7 +456,29 @@
             border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
         }
-    </style>
+    
+/* Back to Top Button */
+#backToTop {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: var(--accent-color);
+    color: white;
+    padding: 0.75rem;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transform: scale(0);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+#backToTop.show {
+    transform: scale(1);
+    opacity: 1;
+}
+
+</style>
 </head>
 <body>
     <header>
@@ -1069,5 +1091,25 @@
             }, 500);
         }
     </script>
+
+<!-- Back to Top Button -->
+<button id="backToTop" aria-label="Back to top">↑</button>
+
+<script>
+    const backToTop = document.getElementById("backToTop");
+
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+            backToTop.classList.add("show");
+        } else {
+            backToTop.classList.remove("show");
+        }
+    });
+
+    backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+</script>
+
 </body>
 </html>
